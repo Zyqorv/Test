@@ -4,7 +4,7 @@
 sudo apt update # Updates installed packages
 
 # Installs git, composer, php, and rabbitmq-server
-apt install -y git composer php rabbitmq-server 
+sudo apt install -y git composer php rabbitmq-server 
 
 # Clones the repository into home directory if it doesn't exist
 if [ ! -d "$HOME/IT490-2026" ]; then 
