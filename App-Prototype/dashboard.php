@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-/*
-    Protected page check:
-    If user is not logged in, redirect to login page.
-*/
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
     exit();
