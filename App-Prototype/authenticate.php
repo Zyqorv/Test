@@ -39,8 +39,6 @@ try {
         die("Invalid password");
     }
 
-    session_regenerate_id(true);
-
     $_SESSION["email"] = $email;
 
     header("Location: dashboard.php");
