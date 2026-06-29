@@ -20,7 +20,7 @@ try {
     $client = new rabbitMQClient(__DIR__ . "/authRabbitMQ.ini");
     $response = $client->send_request($request);
 
-    // echo "Client received response:" . PHP_EOL;
+    echo "Client received response:" . PHP_EOL;
     return $response;
   #  print_r($response);
 } catch (Throwable $error) {
