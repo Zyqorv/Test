@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_POST['email']) || !isset($_POST['password'])) {
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    die("Invalid request method");
+}
+
+if (empty($_POST['email']) || empty($_POST['password'])) {
     die("Missing credentials");
 }
 
@@ -13,25 +17,34 @@ require_once __DIR__ . "/accountMessage.php";
 try {
     $response = sendInformation('login', $email, $password);
 
-    if (!$response || !isset($response["status"] || ($response["status"] == "error"))) {
+    if (!is_array($response) || !isset($response["status"])) {
         die("Invalid response from server");
     }
-    else if ($response["status"] == "invalid") {
+
+    if ($response["status"] === "error") {
+        die("Server error during authentication");
+    }
+
+    if ($response["status"] === "invalid") {
         die("User not found");
     }
 
-    $storedHash = $data["password_hash"];
+    if (!isset($response["password_hash"])) {
+        die("Malformed response from server");
+    }
 
-    if (password_verify($password, $storedHash)) {
+    $storedHash = $response["password_hash"];
 
-        $_SESSION["email"] = $email;
-
-        header("Location: dashboard.php");
-        exit();
-
-    } else {
+    if (!password_verify($password, $storedHash)) {
         die("Invalid password");
     }
+
+    session_regenerate_id(true);
+
+    $_SESSION["email"] = $email;
+
+    header("Location: dashboard.php");
+    exit();
 
 } catch (Throwable $e) {
     error_log("Authentication error: " . $e->getMessage());
