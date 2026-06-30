@@ -1,17 +1,8 @@
 <?php
 session_start();
 
-/*
-    Logout process:
-    1. Clear all session variables
-    2. Destroy the session
-    3. Redirect to login page
-*/
-
-// Unset all session variables
 $_SESSION = [];
 
-// Destroy the session cookie (important for full logout)
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(
@@ -25,9 +16,7 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destroy session
 session_destroy();
 
-// Redirect to login page
 header("Location: login.php");
 exit();
