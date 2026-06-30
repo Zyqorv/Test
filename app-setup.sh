@@ -17,17 +17,27 @@ run() {
     fi
 }
 
+# Updates preinstalled packages
 run "sudo apt update"
 
+# Changes hostname
 run "sudo hostnamectl set-hostname app-vm-milestone-2"
 
+# Installs necessary packages
 run "sudo apt install -y git"
 run "sudo apt install -y composer" 
 run "sudo apt install -y php"
 run "sudo apt install -y ssh"
 run "sudo apt install -y php-cli"
 
-run "curl -s https://install.zerotier.com/ | sudo bash"
-run "sudo zerotier-cli join cf719fd540fc6df4"
+# Installs zerotier and joins group network if not already installed
+if ! command -v zerotier-cli >/dev/null 2>&1; then
+    run "curl -s https://install.zerotier.com/ | sudo bash"
+    run "sudo zerotier-cli join cf719fd540fc6df4"
+else
+    echo "ZeroTier is already installed, skipping installation"
+fi
 
+run "composer install"
 
+echo "Setup script completed successfully"
