@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-</head>
-<body>
+<?php
+session_start();
 
-    <h2>Admin Login</h2>
+if (isset($_SESSION['admin_username'])) {
+    header('Location: /admin/');
+    exit();
+}
 
-    <form action="adminAuth.php" method="POST">
+$statusMessage = $_GET['status_message'] ?? '';
+$statusType = $_GET['status_type'] ?? 'success';
 
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br><br>
-
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-
-        <button type="submit">Login</button>
-
-    </form>
-
-</body>
-</html>
+require __DIR__ . '/../../views/admin/login.php';

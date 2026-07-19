@@ -6,6 +6,6 @@ if (!isset($_SESSION["email"])) {
     exit();
 }
 
-$email = $_SESSION["email"] ?? "User";
+$email = $_SESSION["email"];
 
 require __DIR__ . '/../../views/account/index.php';
