@@ -3,52 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Settings</title>
+    <title>PreDictio &mdash; Profile</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h2>Account Settings</h2>
 
-    <?php if (!empty($statusMessage)): ?>
-        <p style="color: <?php echo $statusType === 'error' ? 'red' : 'green'; ?>;">
-            <?php echo htmlspecialchars($statusMessage); ?>
-        </p>
-    <?php endif; ?>
+    <main class="auth-card">
 
-    <form action="/account/changeEmail" method="POST">
-        <fieldset>
-            <legend>Change Email</legend>
+        <div class="tiles" id="tiles" aria-label="PreDictio"></div>
 
-            <label for="current_password_email">Current Password:</label><br>
-            <input type="password" id="current_password_email" name="current_password" required><br><br>
+        <p class="tagline">Update your account information.</p>
 
-            <label for="new_email">New Email:</label><br>
-            <input type="email" id="new_email" name="new_email" required><br><br>
+        <?php if (!empty($statusMessage)): ?>
+            <p style="color: <?php echo $statusType === 'error' ? 'red' : 'green'; ?>;">
+                <?php echo htmlspecialchars($statusMessage); ?>
+            </p>
+        <?php endif; ?>
 
-            <button type="submit">Change Email</button>
-        </fieldset>
-    </form>
+        <form class="auth-form" action="/account/changeEmail" method="POST">
 
-    <br>
+            <div class="field">
+                <label for="new_email">New Email</label>
+                <input
+                    type="email"
+                    id="new_email"
+                    name="new_email"
+                    placeholder="Enter your new email"
+                    required>
+            </div>
 
-    <form action="/account/changePassword" method="POST">
-        <fieldset>
-            <legend>Change Password</legend>
+            <button type="submit" class="btn btn-primary">
+                Update Email
+            </button>
 
-            <label for="current_password_password">Current Password:</label><br>
-            <input type="password" id="current_password_password" name="current_password" required><br><br>
+        </form>
 
-            <label for="new_password">New Password:</label><br>
-            <input type="password" id="new_password" name="new_password" required><br><br>
+        <div class="divider">
+            <span>or</span>
+        </div>
 
-            <label for="confirm_password">Confirm New Password:</label><br>
-            <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+        <!-- Change Password -->
+        <form class="auth-form" action="/account/changePassword" method="POST">
 
-            <button type="submit">Change Password</button>
-        </fieldset>
-    </form>
+            <div class="field">
+                <label for="new_password">New Password</label>
+                <input
+                    type="password"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="Enter your new password"
+                    required>
+            </div>
 
-    <br>
+            <div class="field">
+                <label for="confirm_password">Confirm New Password</label>
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm your new password"
+                    required>
+            </div>
 
-    <button onclick="window.location.href='/account/'">Back to Dashboard</button>
+            <button type="submit" class="btn btn-primary">
+                Update Password
+            </button>
+
+        </form>
+
+        <a href="/account/" class="forgot-link">Back to Dashboard</a>
+
+        <form action="/logout" method="POST" style="margin-top: 1rem;">
+            <button type="submit" class="btn btn-secondary">
+                Logout
+            </button>
+        </form>
+
+    </main>
+
+    <script src="js/tiles.js"></script>
+
 </body>
 </html>

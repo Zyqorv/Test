@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Account</title>
 </head>
 <body>
 
-    <h2>Dashboard</h2>
+    <h2>Account</h2>
 
-    <p>Welcome, <?php echo htmlspecialchars($email); ?>!</p>
+    <p>Currently logged in as: <?php echo htmlspecialchars($email); ?>!</p>
 
     <form action="/logout" method="POST">
         <button type="submit">Logout</button>

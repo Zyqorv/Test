@@ -11,7 +11,6 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-$currentPassword = $_POST['current_password'] ?? '';
 $newEmail = trim($_POST['new_email'] ?? '');
 $oldEmail = trim($_SESSION['email']);
 
@@ -29,10 +28,6 @@ function redirectToLogout(string $message, string $type = 'success'): void
     exit();
 }
 
-if ($currentPassword === '') {
-    redirectWithStatus('Please enter your current password.', 'error');
-}
-
 if ($newEmail === '') {
     redirectWithStatus('Please enter a new email address.', 'error');
 }
@@ -48,27 +43,6 @@ if ($newEmail === $oldEmail) {
 require_once __DIR__ . '/authMessage.php';
 
 try {
-    $loginResponse = sendAuthMessage('login', $oldEmail);
-
-    if (!is_array($loginResponse) || !isset($loginResponse['status'])) {
-        redirectWithStatus('Invalid response from server.', 'error');
-    }
-
-    if ($loginResponse['status'] === 'error') {
-        redirectWithStatus('Server error during authentication.', 'error');
-    }
-
-    if ($loginResponse['status'] === 'invalid') {
-        redirectWithStatus('User not found.', 'error');
-    }
-
-    if (!isset($loginResponse['password_hash'])) {
-        redirectWithStatus('Malformed response from server.', 'error');
-    }
-
-    if (!password_verify($currentPassword, $loginResponse['password_hash'])) {
-        redirectWithStatus('The current password you entered is incorrect.', 'error');
-    }
 
     $message = [
         'old_email' => $oldEmail,

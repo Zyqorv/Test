@@ -11,7 +11,6 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-$currentPassword = $_POST['current_password'] ?? '';
 $newPassword = $_POST['new_password'] ?? '';
 $confirmPassword = $_POST['confirm_password'] ?? '';
 $email = trim($_SESSION['email']);
@@ -30,10 +29,6 @@ function redirectToLogout(string $message, string $type = 'success'): void
     exit();
 }
 
-if ($currentPassword === '') {
-    redirectWithStatus('Please enter your current password.', 'error');
-}
-
 if ($newPassword === '') {
     redirectWithStatus('Please enter a new password.', 'error');
 }
@@ -45,27 +40,6 @@ if ($newPassword !== $confirmPassword) {
 require_once __DIR__ . '/authMessage.php';
 
 try {
-    $loginResponse = sendAuthMessage('login', $email);
-
-    if (!is_array($loginResponse) || !isset($loginResponse['status'])) {
-        redirectWithStatus('Invalid response from server.', 'error');
-    }
-
-    if ($loginResponse['status'] === 'error') {
-        redirectWithStatus('Server error during authentication.', 'error');
-    }
-
-    if ($loginResponse['status'] === 'invalid') {
-        redirectWithStatus('User not found.', 'error');
-    }
-
-    if (!isset($loginResponse['password_hash'])) {
-        redirectWithStatus('Malformed response from server.', 'error');
-    }
-
-    if (!password_verify($currentPassword, $loginResponse['password_hash'])) {
-        redirectWithStatus('The current password you entered is incorrect.', 'error');
-    }
 
     $passwordHash = password_hash($newPassword, PASSWORD_BCRYPT);
 

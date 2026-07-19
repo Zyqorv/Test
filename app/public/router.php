@@ -43,7 +43,6 @@ if (in_array($extension, $staticExtensions)) {
     exit;
 }
 
-
 // Force trailing slash on GET/HEAD requests only
 if ($method !== 'POST' && $path !== '/' && !str_ends_with($path, '/')) {
     $redirectTarget = $path . '/';
@@ -56,10 +55,8 @@ if ($method !== 'POST' && $path !== '/' && !str_ends_with($path, '/')) {
     exit;
 }
 
-
 // Remove trailing slash internally for file lookup
 $route = trim($path, '/');
-
 
 // Homepage
 if ($route === '') {
@@ -67,14 +64,23 @@ if ($route === '') {
     exit;
 }
 
-
-// Prevent index routes
+// Prevent index routes except for game/index
 if ($route === 'index') {
     http_response_code(404);
     echo "404 Not Found";
     exit;
 }
 
+// Redirect /game/index/ -> /game/
+if ($route === 'game/index') {
+    header('Location: /game/', true, 301);
+    exit;
+}
+
+// Internally map /game/ -> game/index.php
+if ($route === 'game') {
+    $route = 'game/index';
+}
 
 // Map clean URL to PHP file
 $file = __DIR__ . '/' . $route . '.php';
@@ -83,7 +89,6 @@ if (is_file($file)) {
     require $file;
     exit;
 }
-
 
 http_response_code(404);
 echo "404 Not Found";
