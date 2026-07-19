@@ -64,22 +64,34 @@ if ($route === '') {
     exit;
 }
 
-// Prevent index routes except for game/index
+// Prevent direct access to the root index route only
 if ($route === 'index') {
     http_response_code(404);
     echo "404 Not Found";
     exit;
 }
 
-// Redirect /game/index/ -> /game/
-if ($route === 'game/index') {
-    header('Location: /game/', true, 301);
+// Redirect /game/index/, /account/index/, /admin/index/ to their clean URLs
+$indexRedirects = [
+    'game/index'    => '/game/',
+    'account/index' => '/account/',
+    'admin/index'   => '/admin/',
+];
+
+if (isset($indexRedirects[$route])) {
+    header('Location: ' . $indexRedirects[$route], true, 301);
     exit;
 }
 
-// Internally map /game/ -> game/index.php
-if ($route === 'game') {
-    $route = 'game/index';
+// Internally map clean URLs to their index.php files
+$indexRoutes = [
+    'game'    => 'game/index',
+    'account' => 'account/index',
+    'admin'   => 'admin/index',
+];
+
+if (isset($indexRoutes[$route])) {
+    $route = $indexRoutes[$route];
 }
 
 // Map clean URL to PHP file

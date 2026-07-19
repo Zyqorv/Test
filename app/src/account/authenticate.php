@@ -22,7 +22,12 @@ $password = $_POST['password'];
 require_once __DIR__ . '/authMessage.php';
 
 try {
-    $response = sendAuthMessage('login', $email);
+
+    $message = [
+        'email' => $email,
+    ];
+
+    $response = sendAuthMessage('login', $message);
 
     if (!is_array($response) || !isset($response['status'])) {
         redirectWithStatus('/account/login', 'Invalid response from server', 'error');
