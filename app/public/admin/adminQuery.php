@@ -1,0 +1,57 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["admin_username"])) {
+    header("Location: adminLogin.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    $_SESSION["admin_query_result"] = "Error: Invalid request method.";
+    header("Location: adminDatabase.php");
+    exit();
+}
+
+if (!isset($_POST["query"]) || trim($_POST["query"]) === "") {
+    $_SESSION["admin_query_result"] = "Error: No query provided.";
+    header("Location: adminDatabase.php");
+    exit();
+}
+
+$query = trim($_POST["query"]);
+
+require_once __DIR__ . "/accountMessage.php";
+
+try {
+    $response = sendInformation('admin_query', $query);
+
+    if (!is_array($response)) {
+        $_SESSION["admin_query_result"] = "Error: Invalid response from query service.";
+        header("Location: adminDatabase.php");
+        exit();
+    }
+
+    if (isset($response["status"]) && $response["status"] === "error") {
+        $message = isset($response["message"]) ? $response["message"] : "Unknown query error.";
+        $_SESSION["admin_query_result"] = "Error: " . $message;
+        header("Location: adminDatabase.php");
+        exit();
+    }
+
+    if (isset($response["result"])) {
+        $_SESSION["admin_query_result"] = $response["result"];
+    } elseif (isset($response["results"])) {
+        $_SESSION["admin_query_result"] = is_array($response["results"]) ? print_r($response["results"], true) : $response["results"];
+    } else {
+        $_SESSION["admin_query_result"] = print_r($response, true);
+    }
+
+    header("Location: adminDatabase.php");
+    exit();
+
+} catch (Throwable $e) {
+    error_log("Admin query error: " . $e->getMessage());
+    $_SESSION["admin_query_result"] = "Error: Failed to process query.";
+    header("Location: adminDatabase.php");
+    exit();
+}
