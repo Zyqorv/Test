@@ -28,7 +28,7 @@ try {
         'sql' => $query,
     ];
 
-    $response = sendAdminMessage('query', $query);
+    $response = sendAdminMessage('query', $message);
 
     if (!is_array($response)) {
         $_SESSION["admin_query_result"] = "Error: Invalid response from query service.";
