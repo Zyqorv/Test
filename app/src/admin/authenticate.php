@@ -12,11 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirectWithStatus('/admin/login', 'Invalid request method', 'error');
 }
 
-if (empty($_POST['username']) || empty($_POST['password'])) {
+if (empty($_POST['admin_email']) || empty($_POST['password'])) {
     redirectWithStatus('/admin/login', 'Missing credentials', 'error');
 }
 
-$username = trim($_POST['username']);
+$adminEmail = trim($_POST['admin_email']);
 $password = $_POST['password'];
 
 require_once __DIR__ . '/adminMessage.php';
@@ -24,7 +24,7 @@ require_once __DIR__ . '/adminMessage.php';
 try {
 
     $message = [
-        'username' => $username,
+        'admin_email' => $adminEmail,
     ];
 
     $response = sendAdminMessage('admin_login', $message);
@@ -52,7 +52,7 @@ try {
         redirectWithStatus('/admin/login', 'Invalid password', 'error');
     }
 
-    $_SESSION['admin_username'] = $username;
+    $_SESSION['admin_email'] = $adminEmail;
 
     $redirectTo = $_POST['redirect_to'] ?? '/admin/';
     if (!is_string($redirectTo) || !preg_match('#^/[-A-Za-z0-9_./]*$#', $redirectTo)) {

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (isset($_SESSION['admin_username'])) {
+if (isset($_SESSION['admin_email'])) {
     header('Location: /admin/');
     exit();
 }

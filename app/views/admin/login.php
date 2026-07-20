@@ -23,12 +23,12 @@
         <form class="auth-form" action="/admin/authenticate" method="POST">
 
             <div class="field">
-                <label for="username">Username</label>
+                <label for="email">Admin Email</label>
                 <input
-                    type="username"
-                    id="username"
-                    name="username"
-                    placeholder="Enter username"
+                    type="email"
+                    id="admin_email"
+                    name="admin email"
+                    placeholder="Enter admin email"
                     required
                 >
             </div>
@@ -39,7 +39,7 @@
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Enter password"
+                    placeholder="Enter admin password"
                     required
                 >
             </div>
