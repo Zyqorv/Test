@@ -43,10 +43,10 @@ try {
         exit();
     }
 
-    if (isset($response["result"])) {
-        $_SESSION["admin_query_result"] = $response["result"];
-    } elseif (isset($response["results"])) {
-        $_SESSION["admin_query_result"] = is_array($response["results"]) ? print_r($response["results"], true) : $response["results"];
+    if (isset($response["message"])) {
+        $_SESSION["admin_query_result"] = $response["message"];
+    } elseif (isset($response["rows_affected"])) {
+        $_SESSION["admin_query_result"] = $response["rows_affected"];
     } else {
         $_SESSION["admin_query_result"] = print_r($response, true);
     }
