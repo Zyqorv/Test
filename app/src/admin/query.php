@@ -46,7 +46,8 @@ try {
     if (isset($response["message"])) {
         $_SESSION["admin_query_result"] = print_r($response["message"], true);
     } elseif (isset($response["rows_affected"])) {
-        $_SESSION["admin_query_result"] = print_r($response["rows_affected"], true);
+        $output = "Rows affected: " . $response["rows_affected"];
+        $_SESSION["admin_query_result"] = $output;
     } else {
         $_SESSION["admin_query_result"] = print_r($response, true);
     }
