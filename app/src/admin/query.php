@@ -44,9 +44,9 @@ try {
     }
 
     if (isset($response["message"])) {
-        $_SESSION["admin_query_result"] = $response["message"];
+        $_SESSION["admin_query_result"] = print_r($response["message"], true);
     } elseif (isset($response["rows_affected"])) {
-        $_SESSION["admin_query_result"] = $response["rows_affected"];
+        $_SESSION["admin_query_result"] = print_r($response["rows_affected"], true);
     } else {
         $_SESSION["admin_query_result"] = print_r($response, true);
     }
