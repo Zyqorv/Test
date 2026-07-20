@@ -43,11 +43,11 @@ try {
         exit();
     }
 
-    if (isset($response["message"])) {
-        $_SESSION["admin_query_result"] = print_r($response["message"], true);
-    } elseif (isset($response["rows_affected"])) {
+    if (isset($response["rows_affected"])) {
         $output = "Rows affected: " . $response["rows_affected"];
         $_SESSION["admin_query_result"] = $output;
+    } elseif (isset($response["message"])) {
+        $_SESSION["admin_query_result"] = print_r($response["message"], true);
     } else {
         $_SESSION["admin_query_result"] = print_r($response, true);
     }
