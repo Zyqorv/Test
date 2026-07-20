@@ -1,40 +1,45 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["admin_username"])) {
-    header("Location: adminLogin.php");
+if (!isset($_SESSION["admin_email"])) {
+    header("Location: /admin/login");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $_SESSION["admin_query_result"] = "Error: Invalid request method.";
-    header("Location: adminDatabase.php");
+    header("Location: /admin/database");
     exit();
 }
 
 if (!isset($_POST["query"]) || trim($_POST["query"]) === "") {
     $_SESSION["admin_query_result"] = "Error: No query provided.";
-    header("Location: adminDatabase.php");
+    header("Location: /admin/database");
     exit();
 }
 
 $query = trim($_POST["query"]);
 
-require_once __DIR__ . "/accountMessage.php";
+require_once __DIR__ . "/adminMessage.php";
 
 try {
-    $response = sendInformation('admin_query', $query);
+
+    $message = [
+        'sql' => $query,
+    ];
+
+    $response = sendAdminMessage('query', $query);
 
     if (!is_array($response)) {
         $_SESSION["admin_query_result"] = "Error: Invalid response from query service.";
-        header("Location: adminDatabase.php");
+        header("Location: /admin/database");
         exit();
     }
 
     if (isset($response["status"]) && $response["status"] === "error") {
         $message = isset($response["message"]) ? $response["message"] : "Unknown query error.";
         $_SESSION["admin_query_result"] = "Error: " . $message;
-        header("Location: adminDatabase.php");
+        header("Location: /admin/database");
         exit();
     }
 
@@ -46,12 +51,12 @@ try {
         $_SESSION["admin_query_result"] = print_r($response, true);
     }
 
-    header("Location: adminDatabase.php");
+    header("Location: /admin/database");
     exit();
 
 } catch (Throwable $e) {
     error_log("Admin query error: " . $e->getMessage());
     $_SESSION["admin_query_result"] = "Error: Failed to process query.";
-    header("Location: adminDatabase.php");
+    header("Location: /admin/database");
     exit();
 }

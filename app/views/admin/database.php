@@ -1,15 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION["admin_username"])) {
-    header("Location: adminLogin.php");
-    exit();
-}
-
-$queryResult = $_SESSION["admin_query_result"] ?? "Query results will appear here.";
-unset($_SESSION["admin_query_result"]);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +8,7 @@ unset($_SESSION["admin_query_result"]);
 
     <h2>Database Query</h2>
 
-    <form action="adminQuery.php" method="POST">
+    <form action="/admin/query" method="POST">
         <textarea name="query" rows="10" cols="60" placeholder="Enter SQL query here..."></textarea><br><br>
         <button type="submit">Submit</button>
     </form>
