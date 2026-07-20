@@ -15,7 +15,7 @@ $request = [
 try {
     require_once __DIR__ . "/../RabbitMQLib.inc";
 
-    $client = new rabbitMQClient(__DIR__ . "/adminRabbitMQ.ini");
+    $client = new rabbitMQClient(__DIR__ . "/../../config/adminRabbitMQ.ini");
     $response = $client->send_request($request);
 
     echo "Client received response:" . PHP_EOL;
