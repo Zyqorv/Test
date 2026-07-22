@@ -170,7 +170,7 @@ async function loadGame() {
         console.error(error);
 
 
-        definition.innerText = "Unable to load a word.";
+        definition.innerText = "";
 
 
         message.innerText =
