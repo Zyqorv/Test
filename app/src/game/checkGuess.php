@@ -26,7 +26,7 @@ try {
     }
 
 
-    $result = sendGameMessage(
+    $message = sendGameMessage(
         "check_guess",
         [
             "word_id" => $request["wordId"],
@@ -35,7 +35,7 @@ try {
     );
 
 
-    if (!$result["success"]) {
+    if (!$message["success"]) {
 
         http_response_code(500);
 
@@ -50,7 +50,7 @@ try {
     }
 
 
-    $response = $result["message"];
+    $response = $message["result"];
 
 
     if (!$response) {
