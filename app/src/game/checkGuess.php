@@ -10,8 +10,6 @@ try {
 
     $request = json_decode(file_get_contents("php://input"), true);
 
-    error_log(print_r($request, true));
-
     if (
         !$request ||
         !isset($request["wordId"]) ||
@@ -52,7 +50,7 @@ try {
     }
 
 
-    $response = $result["data"];
+    $response = $result["message"];
 
 
     if (!$response) {
