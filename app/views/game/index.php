@@ -280,7 +280,7 @@ async function checkGuess() {
         const result = await response.json();
 
 
-        if (result.result) {
+        if (result.message.result) {
 
 
             message.innerText = "Correct! Loading next word...";
