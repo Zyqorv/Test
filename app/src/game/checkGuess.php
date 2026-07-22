@@ -50,7 +50,7 @@ try {
     }
 
 
-    $response = $message["result"];
+    $response = $message["data"];
 
 
     if (!$response) {
