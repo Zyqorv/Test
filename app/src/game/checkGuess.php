@@ -52,6 +52,7 @@ try {
 
     $response = $message["data"];
 
+    error_log(print_r($response), true);
 
     if (!$response) {
 
