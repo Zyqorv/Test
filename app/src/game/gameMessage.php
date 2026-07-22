@@ -15,7 +15,7 @@ $request = [
 try {
     require_once __DIR__ . "/../RabbitMQLib.inc";
 
-    $client = new rabbitMQClient(__DIR__ . "/gameRabbitMQ.ini");
+    $client = new rabbitMQClient(__DIR__ . "/../../config/gameRabbitMQ.ini");
     $response = $client->send_request($request);
 
     echo "Client received response:" . PHP_EOL;
