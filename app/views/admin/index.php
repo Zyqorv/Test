@@ -2,22 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreDictio &mdash; Admin Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <h2>Admin Portal</h2>
 
-    <p>Currently logged in as: <?php echo htmlspecialchars($adminEmail); ?></p>
+    <main class="auth-card">
 
-    <button onclick="window.location.href='/admin/database'">Database Query</button>
-    <button onclick="window.location.href='/admin/logs'">View Logs</button>
 
-    <br><br>
+        <div class="tiles" id="tiles" aria-label="PreDictio"></div>
 
-    <form action="/logout?redirect_to=/admin/login" method="POST">
-        <button type="submit">Logout</button>
-    </form>
+
+        <p class="tagline">Currently logged in as: <?php echo htmlspecialchars($adminEmail); ?></p>
+
+
+        <div class="auth-form">
+
+
+            <button onclick="window.location.href='/game'" class="btn btn-primary">To Game</button>
+            <button onclick="window.location.href='/admin/database'" class="btn btn-secondary">Database Query</button>
+            <button onclick="window.location.href='/admin/logs'" class="btn btn-secondary">View Logs</button>
+
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+
+            <form action="/logout?redirect_to=/admin/login" method="POST">
+                <button type="submit" class="btn btn-secondary">Logout</button>
+            </form>
+
+
+        </div>
+
+
+    </main>
+
+
+    <script src="/js/tiles.js"></script>
 
 
 </body>

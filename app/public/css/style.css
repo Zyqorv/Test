@@ -7,17 +7,21 @@
   --border: #D3D6DA;
   --border-strong: #878A8C;
 
+
   --tile-green: #6AAA64;
   --tile-amber: #C9B458;
   --tile-gray: #787C7E;
   --tile-text: #FFFFFF;
 
+
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
+
 
 * {
   box-sizing: border-box;
 }
+
 
 body {
   margin: 0;
@@ -31,6 +35,7 @@ body {
   padding: 24px;
 }
 
+
 .auth-card {
   width: 100%;
   max-width: 380px;
@@ -39,11 +44,13 @@ body {
   align-items: center;
 }
 
+
 .tiles {
   display: flex;
   gap: 6px;
   margin-bottom: 28px;
 }
+
 
 .tile {
   width: 34px;
@@ -60,14 +67,17 @@ body {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+
 .tile.green { background: var(--tile-green); }
 .tile.amber { background: var(--tile-amber); }
 .tile.gray { background: var(--tile-gray); }
+
 
 .tile.revealed {
   opacity: 1;
   transform: rotateX(0deg);
 }
+
 
 .tagline {
   font-size: 14px;
@@ -76,6 +86,7 @@ body {
   margin: 0 0 32px;
 }
 
+
 .auth-form {
   width: 100%;
   display: flex;
@@ -83,12 +94,14 @@ body {
   gap: 14px;
 }
 
+
 .field label {
   display: block;
   font-size: 12px;
   color: var(--text-secondary);
   margin-bottom: 4px;
 }
+
 
 .field input {
   width: 100%;
@@ -104,9 +117,11 @@ body {
   transition: border-color 0.15s ease;
 }
 
+
 .field input:focus {
   border-color: var(--border-strong);
 }
+
 
 .error-message {
   font-size: 13px;
@@ -114,11 +129,13 @@ body {
   margin: -4px 0 0;
 }
 
+
 .success-message {
   font-size: 13px;
   color: var(--tile-green);
   margin: -4px 0 0;
 }
+
 
 .btn {
   width: 100%;
@@ -135,14 +152,17 @@ body {
   font-family: inherit;
 }
 
+
 .btn-primary {
   background: var(--tile-green);
   color: #FFFFFF;
 }
 
+
 .btn-primary:hover {
   background: #5B9A56;
 }
+
 
 .btn-secondary {
   background: #FFFFFF;
@@ -150,9 +170,11 @@ body {
   border: 1px solid var(--border-strong);
 }
 
+
 .btn-secondary:hover {
   background: #F3F3F3;
 }
+
 
 .divider {
   display: flex;
@@ -160,6 +182,7 @@ body {
   gap: 10px;
   margin: 2px 0;
 }
+
 
 .divider::before,
 .divider::after {
@@ -169,10 +192,12 @@ body {
   background: var(--border);
 }
 
+
 .divider span {
   font-size: 12px;
   color: var(--text-muted);
 }
+
 
 .forgot-link {
   font-size: 12px;
@@ -181,9 +206,11 @@ body {
   text-decoration: none;
 }
 
+
 .forgot-link:hover {
   text-decoration: underline;
 }
+
 
 @media (max-width: 400px) {
   .tile {
@@ -193,6 +220,7 @@ body {
   }
 }
 
+
 .page-stack {
   width: 100%;
   max-width: 480px;
@@ -200,6 +228,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 
 .game-card {
   background: var(--card-bg);
@@ -212,6 +241,7 @@ body {
   align-items: stretch;
 }
 
+
 .definition-label {
   font-size: 12px;
   font-weight: 700;
@@ -220,6 +250,7 @@ body {
   letter-spacing: 0.03em;
   margin-bottom: 8px;
 }
+
 
 .definition-box {
   background: #F7F7F8;
@@ -233,6 +264,7 @@ body {
   line-height: 1.4;
 }
 
+
 .hint-section {
   background: #FFFFFF;
   border: 1px solid var(--border);
@@ -240,6 +272,7 @@ body {
   border-radius: 6px;
   margin-bottom: 10px;
 }
+
 
 .hint-title {
   font-weight: 700;
@@ -250,11 +283,13 @@ body {
   margin-bottom: 4px;
 }
 
+
 .input-group {
   display: flex;
   gap: 10px;
   margin-top: 16px;
 }
+
 
 .input-group input[type="text"] {
   flex: 1;
@@ -269,13 +304,16 @@ body {
   transition: border-color 0.15s ease;
 }
 
+
 .input-group input[type="text"]:focus {
   border-color: var(--border-strong);
 }
 
+
 .game-card .btn {
   margin-top: 10px;
 }
+
 
 #message {
   margin-top: 14px;
@@ -284,8 +322,10 @@ body {
   font-size: 14px;
 }
 
+
 #message.correct { color: var(--tile-green); }
 #message.incorrect { color: #D93025; }
+
 
 @media (max-width: 400px) {
   .page-stack {

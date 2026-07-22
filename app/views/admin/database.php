@@ -2,23 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreDictio &mdash; Admin Database</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <h2>Database Query</h2>
 
-    <form action="/admin/query" method="POST">
-        <textarea name="query" rows="10" cols="60" placeholder="Enter SQL query here..."></textarea><br><br>
-        <button type="submit">Submit</button>
-    </form>
+    <main class="game-card">
 
-    <br>
 
-    <label for="response">Response:</label><br>
-    <textarea id="response" rows="8" cols="60" readonly><?php echo htmlspecialchars($queryResult); ?></textarea><br><br>
+        <div class="tiles" id="tiles" aria-label="PreDictio"></div>
 
-    <button onclick="window.location.href='adminPortal.php'">Back to Admin Portal</button>
+
+        <p class="tagline">Database Query</p>
+
+
+        <form class="auth-form" action="/admin/query" method="POST">
+
+
+            <div class="field">
+                <label for="query">Query</label>
+                <textarea id="query" name="query" rows="10" placeholder="Enter SQL query here..."></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+        </form>
+
+
+        <div class="field" style="margin-top: 16px;">
+            <label for="response">Response</label>
+            <textarea id="response" rows="8" readonly><?php echo htmlspecialchars($queryResult); ?></textarea>
+        </div>
+
+
+        <div class="auth-form" style="margin-top: 16px;">
+
+
+            <button onclick="window.location.href='/admin'" class="btn btn-secondary">Back to Admin Portal</button>
+
+
+            <form action="/logout?redirect_to=/admin/login" method="POST">
+                <button type="submit" class="btn btn-secondary">Logout</button>
+            </form>
+
+
+        </div>
+
+
+    </main>
+
+
+    <script src="/js/tiles.js"></script>
+
 
 </body>
 </html>

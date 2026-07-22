@@ -53,6 +53,7 @@ try {
     }
 
     $_SESSION['admin_email'] = $adminEmail;
+    $_SESSION['email'] = $adminEmail;
 
     $redirectTo = $_POST['redirect_to'] ?? '/admin/';
     if (!is_string($redirectTo) || !preg_match('#^/[-A-Za-z0-9_./]*$#', $redirectTo)) {
