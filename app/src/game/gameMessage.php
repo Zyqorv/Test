@@ -13,7 +13,7 @@ $request = [
 ];
 
 try {
-    require_once __DIR__ . "/RabbitMQLib.inc";
+    require_once __DIR__ . "/../RabbitMQLib.inc";
 
     $client = new rabbitMQClient(__DIR__ . "/gameRabbitMQ.ini");
     $response = $client->send_request($request);

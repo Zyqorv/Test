@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once __DIR__ . '/../../src/game/gameMessage.php';
+require_once __DIR__ . '/gameMessage.php';
 
 header('Content-Type: application/json');
 
