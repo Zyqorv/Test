@@ -8,31 +8,57 @@ require_once __DIR__ . '/gameMessage.php';
 
 try {
 
-    $response = sendGameMessage(
+    $result = sendGameMessage(
         "get_word",
         [
             "email" => $_SESSION["email"] ?? null
         ]
     );
 
-    if (!$response || !isset($response["word_id"])) {
+
+    if (!$result["success"]) {
 
         http_response_code(500);
 
         echo json_encode([
-            "error" => "No word could be retrieved."
+            "error" => "RabbitMQ request failed",
+            "details" => $result["error"],
+            "location" =>
+                $result["file"] . ":" . $result["line"]
         ]);
 
         exit;
     }
 
+
+    $response = $result["data"];
+
+
+    if (!$response || !isset($response["word_id"])) {
+
+        http_response_code(500);
+
+        echo json_encode([
+            "error" => "Invalid response from game server",
+            "response_received" => $response
+        ]);
+
+        exit;
+    }
+
+
     echo json_encode($response);
 
-} catch (Exception $e) {
+
+} catch (Throwable $e) {
+
 
     http_response_code(500);
 
     echo json_encode([
-        "error" => "Failed to load game data."
+        "error" => $e->getMessage(),
+        "file" => $e->getFile(),
+        "line" => $e->getLine()
     ]);
+
 }

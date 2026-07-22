@@ -134,9 +134,15 @@ async function loadGame() {
             method: "POST"
         });
 
-
         if (!response.ok) {
-            throw new Error("Server returned an error.");
+
+            const errorData = await response.json();
+
+            throw new Error(
+                errorData.details ||
+                errorData.error ||
+                "Unknown server error"
+            );
         }
 
 
