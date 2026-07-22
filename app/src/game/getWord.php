@@ -15,6 +15,8 @@ try {
         ]
     );
 
+    error_log(print_r($response, true));
+
 
     if (!$result["success"]) {
 
