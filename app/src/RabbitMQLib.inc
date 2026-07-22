@@ -216,7 +216,7 @@ class rabbitMQClient
         $timeout = $this->config["RESPONSE_TIMEOUT"];
 	$correlationId = bin2hex(random_bytes(12));
 	#put in an echo to show the correlation ID when it is generated
-	echo "Correlation ID: {$correlationId}" . PHP_EOL;
+    error_log("Correlation ID: {$correlationId}");
         $responseBody = null;
 
         rabbitMQPrepareMessageRoute($channel, $this->config);
@@ -245,7 +245,7 @@ class rabbitMQClient
             ]
         );
 
-        echo "Sending request to queue '{$queue}'" . PHP_EOL;
+        error_log("Sending request to queue '{$queue}'");
         rabbitMQPublishMessage($channel, $this->config, $message);
 
         try {
