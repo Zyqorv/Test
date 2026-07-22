@@ -246,7 +246,7 @@ async function checkGuess() {
             .trim();
 
 
-        const response = await fetch("/game/checkGuess.php", {
+        const response = await fetch("/game/checkGuess", {
 
 
             method: "POST",
