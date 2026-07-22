@@ -130,7 +130,9 @@ async function loadGame() {
     try {
 
 
-        const response = await fetch("/game/getWord.php");
+        const response = await fetch("/game/getWord", {
+            method: "POST"
+        });
 
 
         if (!response.ok) {
