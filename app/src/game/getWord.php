@@ -34,7 +34,7 @@ try {
     $response = $result["data"];
 
 
-    if (!$response || !isset($response["word_id"])) {
+    if (!$response || !isset($response["wordId"])) {
 
         http_response_code(500);
 
@@ -46,6 +46,7 @@ try {
         exit;
     }
 
+    error_log(print_r($response, true));
 
     echo json_encode($response);
 

@@ -18,8 +18,6 @@ function sendGameMessage($type, $message)
 
         $response = $client->send_request($request);
 
-        error_log(print_r($response, true));
-
         return [
             "success" => true,
             "data" => $response
