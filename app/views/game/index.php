@@ -311,7 +311,7 @@ async function checkGuess(giveUp = false) {
         if (giveUp) {
 
             message.innerText =
-                `The correct word was "${result.message.word}". Loading next word...`;
+                `The correct word was "${result.message.result}". Loading next word...`;
 
             message.className = "incorrect";
 
