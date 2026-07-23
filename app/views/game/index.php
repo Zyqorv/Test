@@ -24,6 +24,9 @@ Expected JSON Response:
             "value": "4 syllables"
         }
     ]
+    "total_guesses": 9
+    "total_wins": 2
+    "total_losses": 1 
 }
 
 
@@ -58,13 +61,20 @@ Expected JSON Response:
 
         <div class="definition-label">Definition</div>
 
-
         <div class="definition-box" id="definition">
             Loading definition...
         </div>
 
+
         <div class="guess-counter">
             Guesses: <span id="guess-count">0</span>
+        </div>
+
+
+        <div class="stats">
+            <div>Global Guesses: <span id="total-guesses">-</span></div>
+            <div>Global Wins: <span id="total-wins">-</span></div>
+            <div>Global Losses: <span id="total-losses">-</span></div>
         </div>
 
 
@@ -90,7 +100,6 @@ Expected JSON Response:
 
         </div>
 
-
         <button
             class="btn btn-secondary"
             onclick="revealNextHint()">
@@ -104,7 +113,6 @@ Expected JSON Response:
         </button>
 
         <button onclick="window.location.href='/account/'" class="btn btn-secondary">Account</button>
-
 
         <div id="message"></div>
 
@@ -124,6 +132,18 @@ Expected JSON Response:
 let currentItem = null;
 let currentHintIndex = 0;
 let guessCount = 0;
+
+function updateStats() {
+
+    document.getElementById("total-guesses").innerText =
+        currentItem.total_guesses ?? "-";
+
+    document.getElementById("total-wins").innerText =
+        currentItem.total_wins ?? "-";
+
+    document.getElementById("total-losses").innerText =
+        currentItem.total_losses ?? "-";
+}
 
 async function loadGame() {
 
@@ -154,9 +174,9 @@ async function loadGame() {
             );
         }
 
-
         currentItem = await response.json();
 
+        updateStats();
 
         if (!currentItem || !currentItem.definition || !currentItem.hints) {
             throw new Error("Invalid game data received.");

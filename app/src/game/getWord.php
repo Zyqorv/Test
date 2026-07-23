@@ -11,7 +11,7 @@ try {
     $result = sendGameMessage(
         "get_word",
         [
-            "email" => $_SESSION["email"] ?? null
+            "email" => $_SESSION["email"] ?? null,
         ]
     );
 

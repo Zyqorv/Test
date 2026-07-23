@@ -17,12 +17,14 @@
 
         <p class="tagline">Currently logged in as: <?php echo htmlspecialchars($email); ?>!</p>
 
-        <div class="stats">
-            <p>Total Guesses: <span id="total-guesses">Loading...</span></p>
-            <p>Total Wins: <span id="total-wins">Loading...</span></p>
-            <p>Total Losses: <span id="total-losses">Loading...</span></p>
-            <p>Current Streak: <span id="current-streak">Loading...</span></p>
+        <div class="stat-container">
+            <div>Total Guesses: <span id="total-guesses">Loading...</span></div>
+            <div>Total Wins: <span id="total-wins">Loading...</span></div>
+            <div>Total Losses: <span id="total-losses">Loading...</span></div>
+            <div>Current Streak: <span id="current-streak">Loading...</span></div>
         </div>
+
+        <div id="stats-message"></div>
 
         <div class="auth-form">
 
@@ -51,29 +53,63 @@
     <script src="/js/tiles.js"></script>
 
     <script>
-    async function loadStats() {
-        try {
-            const response = await fetch('/account/getStats', {
-                method: 'POST'
-            });
+        async function loadStats() {
 
-            if (!response.ok) {
-                throw new Error("Failed to load stats");
+            const message = document.getElementById("stats-message");
+
+            const timeout = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("Request timed out")), 5000)
+            );
+
+            try {
+
+                const response = await Promise.race([
+                    fetch('/account/getStats.php', {
+                        method: 'POST'
+                    }),
+                    timeout
+                ]);
+
+
+                const stats = await response.json();
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        stats.details ||
+                        stats.error ||
+                        "Unknown server error"
+                    );
+                }
+
+
+                document.getElementById('total-guesses').textContent = stats.total_guesses;
+                document.getElementById('total-wins').textContent = stats.total_wins;
+                document.getElementById('total-losses').textContent = stats.total_losses;
+                document.getElementById('current-streak').textContent = stats.current_streak;
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                document.getElementById('total-guesses').textContent = "-";
+                document.getElementById('total-wins').textContent = "-";
+                document.getElementById('total-losses').textContent = "-";
+                document.getElementById('current-streak').textContent = "-";
+
+
+                message.innerText =
+                    "Error: Unable to load account statistics.";
+
+
+                message.className = "incorrect";
+
             }
-
-            const stats = await response.json();
-
-            document.getElementById('total-guesses').textContent = stats.total_guesses;
-            document.getElementById('total-wins').textContent = stats.total_wins;
-            document.getElementById('total-losses').textContent = stats.total_losses;
-            document.getElementById('current-streak').textContent = stats.current_streak;
-
-        } catch (error) {
-            console.error(error);
         }
-    }
 
-    loadStats();
+        loadStats();
     </script>
 </body>
 </html>

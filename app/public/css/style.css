@@ -314,6 +314,15 @@ body {
   margin-top: 10px;
 }
 
+.stats {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.8rem;
+    color: #555;
+}
 
 #message {
   margin-top: 14px;
