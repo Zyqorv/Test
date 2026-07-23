@@ -64,7 +64,7 @@
             try {
 
                 const response = await Promise.race([
-                    fetch('/account/getStats.php', {
+                    fetch('/account/getStats', {
                         method: 'POST'
                     }),
                     timeout
