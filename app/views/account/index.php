@@ -17,9 +17,14 @@
 
         <p class="tagline">Currently logged in as: <?php echo htmlspecialchars($email); ?>!</p>
 
+        <div class="stats">
+            <p>Total Guesses: <span id="total-guesses">Loading...</span></p>
+            <p>Total Wins: <span id="total-wins">Loading...</span></p>
+            <p>Total Losses: <span id="total-losses">Loading...</span></p>
+            <p>Current Streak: <span id="current-streak">Loading...</span></p>
+        </div>
 
         <div class="auth-form">
-
 
             <button onclick="window.location.href='/game'" class="btn btn-primary">To Game</button>
 
@@ -45,6 +50,30 @@
 
     <script src="/js/tiles.js"></script>
 
+    <script>
+    async function loadStats() {
+        try {
+            const response = await fetch('/account/getStats', {
+                method: 'POST'
+            });
 
+            if (!response.ok) {
+                throw new Error("Failed to load stats");
+            }
+
+            const stats = await response.json();
+
+            document.getElementById('total-guesses').textContent = stats.total_guesses;
+            document.getElementById('total-wins').textContent = stats.total_wins;
+            document.getElementById('total-losses').textContent = stats.total_losses;
+            document.getElementById('current-streak').textContent = stats.current_streak;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    loadStats();
+    </script>
 </body>
 </html>
