@@ -29,6 +29,7 @@ try {
     $message = sendGameMessage(
         "check_guess",
         [
+            "email" => $_SESSION["email"] ?? null,
             "word_id" => $request["wordId"],
             "guess" => trim($request["guess"])
         ]
@@ -41,9 +42,9 @@ try {
 
         echo json_encode([
             "error" => "RabbitMQ request failed",
-            "details" => $result["error"],
+            "details" => $message["error"],
             "location" =>
-                $result["file"] . ":" . $result["line"]
+                $message["file"] . ":" . $message["line"]
         ]);
 
         exit;

@@ -63,6 +63,10 @@ Expected JSON Response:
             Loading definition...
         </div>
 
+        <div class="guess-counter">
+            Guesses: <span id="guess-count">0</span>
+        </div>
+
 
         <div id="hints-container"></div>
 
@@ -93,6 +97,11 @@ Expected JSON Response:
             Reveal Next Hint
         </button>
 
+        <button
+            class="btn btn-secondary"
+            onclick="giveUp()">
+            Give Up
+        </button>
 
         <button onclick="window.location.href='/account/'" class="btn btn-secondary">Account</button>
 
@@ -114,7 +123,7 @@ Expected JSON Response:
 
 let currentItem = null;
 let currentHintIndex = 0;
-
+let guessCount = 0;
 
 async function loadGame() {
 
@@ -159,6 +168,9 @@ async function loadGame() {
 
         document.getElementById("hints-container").innerHTML = "";
         document.getElementById("guess-input").value = "";
+
+        guessCount = 0;
+        document.getElementById("guess-count").innerText = guessCount;
 
 
         currentHintIndex = 0;
@@ -225,8 +237,17 @@ function revealNextHint() {
     currentHintIndex++;
 }
 
+async function giveUp() {
 
-async function checkGuess() {
+    if (!currentItem) {
+        return;
+    }
+
+    await checkGuess(true);
+
+}
+
+async function checkGuess(giveUp = false) {
 
 
     if (!currentItem) {
@@ -240,10 +261,17 @@ async function checkGuess() {
     try {
 
 
-        const guess = document
-            .getElementById("guess-input")
-            .value
-            .trim();
+        const guess = giveUp
+            ? "give_up"
+            : document
+                .getElementById("guess-input")
+                .value
+                .trim();
+
+        if (!giveUp) {
+            guessCount++;
+            document.getElementById("guess-count").innerText = guessCount;
+        }
 
 
         const response = await fetch("/game/checkGuess", {
@@ -280,22 +308,26 @@ async function checkGuess() {
         const result = await response.json();
 
 
-        if (result.message.result) {
+        if (giveUp) {
 
+            message.innerText =
+                `The correct word was "${result.message.word}". Loading next word...`;
+
+            message.className = "incorrect";
+
+            setTimeout(loadGame, 2000);
+
+        } else if (result.message.result) {
 
             message.innerText = "Correct! Loading next word...";
             message.className = "correct";
 
-
             setTimeout(loadGame, 1500);
-
 
         } else {
 
-
             message.innerText = "Incorrect, try again!";
             message.className = "incorrect";
-
 
         }
 
